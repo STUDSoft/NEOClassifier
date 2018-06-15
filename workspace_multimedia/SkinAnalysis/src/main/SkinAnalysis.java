@@ -34,8 +34,14 @@ public class SkinAnalysis extends JFrame {
 	/** The starting tab */
 	private JPanel start;
 	
-	/** Button used to add patients*/
+	/** Button used to add a patient */
 	private JButton addPatientBt;
+	/** Button to update an existent patient data */
+	private JButton updatePatientBt;
+	/** Button to load an existent patient data */
+	private JButton loadPatientBt;
+	/** Button to close application */
+	private JButton closeApp;
 	
 	/** Default dimension for the app */
 	private Dimension defaultDim = new Dimension(950,550);
@@ -62,7 +68,20 @@ public class SkinAnalysis extends JFrame {
 			}
 		});
 		
-		start.add(addPatientBt);
+		updatePatientBt=new JButton("Update an existing patient");
+
+		loadPatientBt=new JButton("Load an existing patient");
+		
+		closeApp=new JButton("Close App");
+		
+		JPanel btnPanel=new JPanel();
+		btnPanel.setLayout( new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
+		btnPanel.add(addPatientBt);
+		btnPanel.add(updatePatientBt);
+		btnPanel.add(loadPatientBt);
+		btnPanel.add(closeApp);
+		
+		start.add(btnPanel);
 		
 		tabPane.addTab("Start", start);
 		tabPane.setMaximumSize(tabPaneDim);
