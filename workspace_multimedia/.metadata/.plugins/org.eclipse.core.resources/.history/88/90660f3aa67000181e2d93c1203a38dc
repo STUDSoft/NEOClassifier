@@ -1,0 +1,14 @@
+package main;
+
+import javax.swing.JFrame;
+
+public class Patient extends JFrame {
+
+	/**
+	 * Default constructor
+	 * @param number The number of the current patient
+	 */
+	public Patient(int number) {
+		
+	}
+}

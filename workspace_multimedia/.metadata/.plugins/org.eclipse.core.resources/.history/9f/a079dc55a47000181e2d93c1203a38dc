@@ -1,0 +1,14 @@
+package main;
+
+import java.awt.Component;
+
+public class Patient extends Component {
+
+	/**
+	 * Default constructor
+	 * @param number The number of the current patient
+	 */
+	public Patient(int number) {
+		
+	}
+}
