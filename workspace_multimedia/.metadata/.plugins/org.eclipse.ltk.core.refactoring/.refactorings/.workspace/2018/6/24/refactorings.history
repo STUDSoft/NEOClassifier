@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;DeskEmoPlus_[BINARIO]&apos;" deleteContents="false" description="Delete resource &apos;DeskEmoPlus_[BINARIO]&apos;" element1="/DeskEmoPlus_[BINARIO]" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1529050024122"/>
+</session>
