@@ -1,4 +1,4 @@
-package uniba.neoclassifier;
+package uniba.neoclassifier.gui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

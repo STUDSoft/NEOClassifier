@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
-        tools:context=".MainActivity">
+        tools:context=".gui.MainActivity">
 
         <ImageView
             android:id="@+id/imageView"

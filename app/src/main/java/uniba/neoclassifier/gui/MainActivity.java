@@ -1,4 +1,4 @@
-package uniba.neoclassifier;
+package uniba.neoclassifier.gui;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -25,8 +25,9 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Pattern;
+
+import uniba.neoclassifier.R;
 
 public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
