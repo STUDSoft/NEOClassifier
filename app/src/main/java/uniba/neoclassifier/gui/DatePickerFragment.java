@@ -1,7 +1,8 @@
-package uniba.neoclassifier;
+package uniba.neoclassifier.gui;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
