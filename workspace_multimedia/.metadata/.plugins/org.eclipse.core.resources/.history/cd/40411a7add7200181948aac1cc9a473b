@@ -1,0 +1,79 @@
+package main;
+
+import java.util.Date;
+
+public class Patient {
+
+	/** Name of the patient*/
+	private String name;
+	/** Surname of the patient */
+	private String surname;
+	/** Date of Birth of the patient */
+	private Date dateOfBirth;
+	
+	/**
+	 * Default Constructor of the class
+	 * 
+	 * @param n The name of the patient
+	 * @param s The surname of the patient
+	 * @param dob The date of birth of the patient
+	 */
+	public Patient(String n, String s, Date dob) {
+		name=n;
+		surname=s;
+		dateOfBirth=dob;
+	}
+	
+	/**
+	 * Used to get the name of the patient
+	 * @return The name of the patient
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Used to get the surname of the patient
+	 * @return The surname of the patient
+	 */
+	public String getSurname() {
+		return surname;
+	}
+
+	/**
+	 * Used to get the date of birth of the patient
+	 * @return The date of birth of the patient
+	 */
+	public Date getDOB() {
+		return dateOfBirth;
+	}
+	
+	/**
+	 * Used to change the name of the patient
+	 * @param n the new name of the patient
+	 */
+	public void setName(String n) {
+		name=n;
+	}
+	
+
+	/**
+	 * Used to change the surname of the patient
+	 * @param n the new surname of the patient
+	 */
+	public void setSurname(String s) {
+		surname=s;
+	}
+	
+	public void save() {
+		//TODO
+	}
+	
+	public void load() {
+		//TODO
+	}
+	
+	public String toString() {
+		return name+" "+surname+", "+dateOfBirth;
+	}
+}

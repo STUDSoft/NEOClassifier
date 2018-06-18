@@ -1,0 +1,39 @@
+package main;
+
+import java.util.Date;
+
+public class Patient {
+
+	/** Name of the patient*/
+	private String name;
+	/** Surname of the patient */
+	private String surname;
+	/** Date of Birth of the patient */
+	private Date dateOfBirth;
+	
+	public Patient(String n, String s, Date dob) {
+		name=n;
+		surname=s;
+		dateOfBirth=dob;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getSurname() {
+		return surname;
+	}
+	
+	public Date getDOB() {
+		return dateOfBirth;
+	}
+	
+	public void setName(String n) {
+		name=n;
+	}
+	
+	public void setSurname(String s) {
+		surname=s;
+	}
+}

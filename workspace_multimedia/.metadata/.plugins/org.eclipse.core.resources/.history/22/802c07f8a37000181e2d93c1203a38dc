@@ -1,7 +1,0 @@
-package main;
-
-import java.awt.Component;
-
-public class Patient extends Component {
-
-}
