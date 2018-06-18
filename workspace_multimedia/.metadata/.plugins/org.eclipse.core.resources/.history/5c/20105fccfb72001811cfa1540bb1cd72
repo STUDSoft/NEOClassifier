@@ -1,0 +1,17 @@
+package components;
+
+/**
+ * Class used to clarify date format
+ * @author Daniele
+ *
+ */
+public class Date {
+	
+	/** Number of the day of the month */
+	private int day;
+	/** Number of the month */
+	private int month;
+	/** Year */
+	private int year;
+
+}
