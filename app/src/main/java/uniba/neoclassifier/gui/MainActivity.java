@@ -13,7 +13,7 @@ import uniba.neoclassifier.utility.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PAZIENTE = "uniba.neoclassifier.entity.PAZIENTE";
+    private static final String PAZIENTE = "uniba.neoclassifier.entity.PAZIENTE";
     private SessionManager session;
 
     @Override

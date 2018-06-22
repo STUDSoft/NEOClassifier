@@ -4,12 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import uniba.neoclassifier.gui.CreateUserActivity;
 
-public class SessionManager {
-
+public class SessionManager implements Serializable{
     SharedPreferences pref;
 
     // Editor for Shared preferences
