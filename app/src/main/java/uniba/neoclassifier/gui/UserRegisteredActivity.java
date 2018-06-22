@@ -1,6 +1,9 @@
 package uniba.neoclassifier.gui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,7 +41,7 @@ public class UserRegisteredActivity extends AppCompatActivity {
         newScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                openCamera();
             }
         });
         goHome.setOnClickListener(new View.OnClickListener() {
@@ -50,11 +53,27 @@ public class UserRegisteredActivity extends AppCompatActivity {
     }
 
     private void goHome() {
-        Paziente paziente = (Paziente) getIntent().getParcelableExtra(PAZIENTE);
+        Paziente paziente = (Paziente) getIntent().getSerializableExtra(PAZIENTE);
         Intent intent = new Intent(this, HomePageActivity.class);
         intent.putExtra(PAZIENTE, paziente);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.fade_back);
         finish();
+    }
+
+    private void openCamera(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+        /*Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.no_anim);
+        finish();
+        */
     }
 }

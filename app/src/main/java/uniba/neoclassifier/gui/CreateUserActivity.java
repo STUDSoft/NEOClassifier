@@ -181,11 +181,11 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
                 Intent intent = new Intent(this, UserRegisteredActivity.class);
                 intent.putExtra(PAZIENTE, paziente);
                 startActivity(intent);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                overridePendingTransition(R.anim.fade_in, R.anim.no_anim);
                 finish();
 
             } else {
-                Toast.makeText(this, "Errore nella registrazione" , Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Errore nella registrazione", Toast.LENGTH_LONG).show();
             }
         }
     }

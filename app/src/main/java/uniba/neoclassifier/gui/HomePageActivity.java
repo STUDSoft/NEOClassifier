@@ -1,8 +1,11 @@
 package uniba.neoclassifier.gui;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -22,12 +25,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import uniba.neoclassifier.R;
+import uniba.neoclassifier.entity.Paziente;
+import uniba.neoclassifier.utility.SessionManager;
 
 public class HomePageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    private ViewPager mViewPager;
+    private static final String PAZIENTE = "uniba.neoclassifier.entity.PAZIENTE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +39,21 @@ public class HomePageActivity extends AppCompatActivity
         setContentView(R.layout.activity_home_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Paziente paziente = (Paziente) getIntent().getSerializableExtra(PAZIENTE);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                openCamera();
             }
         });
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -64,8 +67,20 @@ public class HomePageActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        TextView name = (TextView) findViewById(R.id.nameTextDrawer);
+        TextView email = (TextView) findViewById(R.id.emailTextDrawer);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView navUsername = (TextView) headerView.findViewById(R.id.nameTextDrawer);
+        TextView namEmail = (TextView) headerView.findViewById(R.id.emailTextDrawer);
+
+        String nomeCognome = paziente.getNome() + " " + paziente.getCognome();
+        String emailText = paziente.getEmail();
+        navUsername.setText(nomeCognome);
+        namEmail.setText(emailText);
+        toolbar.setTitle(nomeCognome);
     }
 
     @Override
@@ -82,7 +97,6 @@ public class HomePageActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home_page, menu);
-        getMenuInflater().inflate(R.menu.menu_home_page2, menu);
         return true;
     }
 
@@ -95,7 +109,9 @@ public class HomePageActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+
+        } else if (id == R.id.action_logout) {
+            logout();
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,15 +131,40 @@ public class HomePageActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_setting) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_logout) {
+            logout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+        /*Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fade_in, R.anim.no_anim);
+        finish();
+        */
+    }
+
+    private void logout() {
+        SessionManager sessionManager = new SessionManager(getApplicationContext());
+        sessionManager.logoutUser();
+        Intent i = new Intent(this, CreateUserActivity.class);
+        this.startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.fade_back);
+        finish();
     }
 
     public static class PlaceholderFragment extends Fragment {
