@@ -12,9 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import components.ButtonTabComponent;
 
@@ -71,6 +73,11 @@ public class SkinAnalysis extends JFrame {
 		updatePatientBt=new JButton("Update an existing patient");
 
 		loadPatientBt=new JButton("Load an existing patient");
+		loadPatientBt.addActionListener(new java.awt.event.ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				loadPatient();
+			}
+		});
 		
 		closeApp=new JButton("Close App");
 		
@@ -119,6 +126,29 @@ public class SkinAnalysis extends JFrame {
 		//TODO
 		patientN++;
 		Component patientPanel=new PatientPanel(patientN);
+		String title=new String("Patient"+patientN);
+		tabPane.addTab(title, patientPanel);
+		
+		ButtonTabComponent btn= new ButtonTabComponent(tabPane);
+		tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
+		
+	}
+	
+	/**
+	 * Creates a new ta and load an existing patient
+	 */
+	private void loadPatient() {
+		patientN++;
+
+		JPanel dialog=new JPanel();
+		dialog.setLayout(new BoxLayout(dialog,BoxLayout.Y_AXIS));
+		dialog.add(new JLabel("Patient's data path:"));
+		JTextField pathTF=new JTextField("C:\\Users\\");
+		dialog.add(pathTF);
+		JOptionPane.showMessageDialog(this, dialog);
+		String path=new String(pathTF.getText());
+		
+		Component patientPanel=new PatientPanel(patientN, path);
 		String title=new String("Patient"+patientN);
 		tabPane.addTab(title, patientPanel);
 		

@@ -1,0 +1,11 @@
+package main;
+
+/**
+ * Class for stored images
+ * @author Daniele
+ *
+ */
+public class Image {
+	
+	
+}
