@@ -1,0 +1,32 @@
+package main;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.Socket;
+
+public class Connector {
+
+	public static void connect() {
+		
+		Thread t=new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				try {
+					
+					Socket s = ss.accept();
+					System.out.println("accepted");
+					
+					FileInputStream file=new FileInputStream("C:\\Users\\Daniele\\Downloads\\Universita");
+					
+				}
+				catch(IOException e) {
+					
+				}
+			}
+		});
+		
+	}
+	
+}

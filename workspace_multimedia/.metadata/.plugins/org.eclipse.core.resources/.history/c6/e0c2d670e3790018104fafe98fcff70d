@@ -1,0 +1,17 @@
+package main;
+
+public class Connector {
+
+	public static void connect() {
+		
+		Thread t=new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+			}
+		});
+		
+	}
+	
+}
