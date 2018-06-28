@@ -23,7 +23,7 @@ public class Patient {
 	/** Date of Birth of the patient */
 	private Date dateOfBirth;
 	/** Array of images of the patient */
-	private Image[] imgs;
+	private PatientImage[] imgs;
 	/** Default save path for patients*/
 	private String dSavePath="C:\\Users\\Daniele\\Downloads\\Universita\\Patients";
 	
@@ -38,7 +38,7 @@ public class Patient {
 		name=n;
 		surname=s;
 		dateOfBirth=dob;
-		imgs=new Image[0];
+		imgs=new PatientImage[0];
 		
 		File file=new File(dSavePath);
 		if(!file.exists())
@@ -84,7 +84,7 @@ public class Patient {
 	 * Used to get the patient images
 	 * @return An array of Image objects
 	 */
-	public Image[] getImages() {
+	public PatientImage[] getImages() {
 		return imgs;
 	}
 	
@@ -172,15 +172,14 @@ public class Patient {
 			File file=new File(imgP);
 			if(file.exists()) {
 				File[] imgDir=file.listFiles();
-				System.out.println(""+imgDir.length);
-				imgs=new Image[imgDir.length];
+				imgs=new PatientImage[imgDir.length];
 				for(int i=0; i<imgDir.length; i++) {
-						Image tmp=new Image(imgDir[i], new Date(2000,12,16), "somewhere");
+						PatientImage tmp=new PatientImage(imgDir[i], new Date(2000,12,16), "somewhere");
 						imgs[i]=tmp;
 					}
 			}
 			else
-				imgs=new Image[0];
+				imgs=new PatientImage[0];
 		}
 		catch(Exception e) {
 			e.printStackTrace();
