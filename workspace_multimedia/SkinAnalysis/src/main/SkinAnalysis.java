@@ -7,9 +7,11 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import components.ButtonTabComponent;
 
@@ -44,6 +47,8 @@ public class SkinAnalysis extends JFrame {
 	private JButton loadPatientBt;
 	/** Button to close application */
 	private JButton closeApp;
+	/*TODO Default border for the app buttons */
+	//private Border buttonBorder=BorderFactory.createEmptyBorder(0, 10, 10, 0);
 	
 	/** Default dimension for the app */
 	private Dimension defaultDim = new Dimension(950,550);
@@ -60,8 +65,7 @@ public class SkinAnalysis extends JFrame {
 		
 		//creating starting tab
 		start = new JPanel();
-		start.setLayout( new BoxLayout(start, BoxLayout.X_AXIS));
-		start.add(new JTextArea("ciao"));
+		//start.setLayout( new BoxLayout(start, BoxLayout.Y_AXIS));
 		
 		addPatientBt=new JButton("Add Patient");
 		addPatientBt.addActionListener(new java.awt.event.ActionListener(){
@@ -71,7 +75,7 @@ public class SkinAnalysis extends JFrame {
 		});
 		
 		updatePatientBt=new JButton("Update an existing patient");
-
+		
 		loadPatientBt=new JButton("Load an existing patient");
 		loadPatientBt.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(ActionEvent e){
@@ -80,6 +84,12 @@ public class SkinAnalysis extends JFrame {
 		});
 		
 		closeApp=new JButton("Close App");
+		closeApp.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				destroy();
+				System.exit(0);
+			}
+		});
 		
 		JPanel btnPanel=new JPanel();
 		btnPanel.setLayout( new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
@@ -116,44 +126,49 @@ public class SkinAnalysis extends JFrame {
 	 * Closes the application
 	 */
 	public void destroy() {
-		
+		System.out.println("Closing");
 	}
 	
 	/**
 	 * Creates a new tab for a client
 	 */
 	private void addPatient() {
-		//TODO
 		patientN++;
-		Component patientPanel=new PatientPanel(patientN);
+		PatientPanel patientPanel=new PatientPanel(tabPane, patientN);
 		String title=new String("Patient"+patientN);
 		tabPane.addTab(title, patientPanel);
 		
-		ButtonTabComponent btn= new ButtonTabComponent(tabPane);
+		ButtonTabComponent btn= patientPanel.getBtnTabComponent();
 		tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
 		
 	}
 	
 	/**
-	 * Creates a new ta and load an existing patient
+	 * Creates a new tab and load an existing patient
 	 */
 	private void loadPatient() {
-		patientN++;
+		
+		JFileChooser c = new JFileChooser();
+		String path= new String();
+		c.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+	    int rVal = c.showOpenDialog(SkinAnalysis.this);
+	    if (rVal == JFileChooser.APPROVE_OPTION) {
+	        path=c.getCurrentDirectory().toString()+"\\"+c.getSelectedFile().getName();
 
-		JPanel dialog=new JPanel();
-		dialog.setLayout(new BoxLayout(dialog,BoxLayout.Y_AXIS));
-		dialog.add(new JLabel("Patient's data path:"));
-		JTextField pathTF=new JTextField("C:\\Users\\");
-		dialog.add(pathTF);
-		JOptionPane.showMessageDialog(this, dialog);
-		String path=new String(pathTF.getText());
-		
-		Component patientPanel=new PatientPanel(patientN, path);
-		String title=new String("Patient"+patientN);
-		tabPane.addTab(title, patientPanel);
-		
-		ButtonTabComponent btn= new ButtonTabComponent(tabPane);
-		tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
+			PatientPanel patientPanel=new PatientPanel(tabPane, patientN+1, path);
+			String title=new String("Patient"+(patientN+1));
+			tabPane.addTab(title, patientPanel);
+			
+			ButtonTabComponent btn= patientPanel.getBtnTabComponent();
+			tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
+		     
+			patientN++;
+			
+	    }
+	    else if (rVal == JFileChooser.CANCEL_OPTION) {
+	        System.out.println("Loading cancelled");
+	    }
 		
 	}
 	
@@ -163,7 +178,6 @@ public class SkinAnalysis extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println("Avvio");
 		new SkinAnalysis();
 	}
