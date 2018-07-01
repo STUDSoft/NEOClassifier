@@ -70,10 +70,10 @@ public class UserRegisteredActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-        /*Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, ScanCompleteActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.no_anim);
         finish();
-        */
+
     }
 }
