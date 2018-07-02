@@ -49,9 +49,10 @@ public class Patient {
 	
 	/**
 	 * Constructor to load the patient's data
-	 * @param path
+	 * @param path The path to the directory of the patient
+	 * @throws WrongDirectoryException If the directory is not accepted
 	 */
-	public Patient(String path) {
+	public Patient(String path) throws WrongDirectoryException {
 		dSavePath=path;
 		this.load();
 	}
@@ -147,16 +148,18 @@ public class Patient {
 	
 	/**
 	 * Loads the patient data using the default path
+	 * @throws WrongDirectoryException If the directory is not accepted
 	 */
-	public void load() {
+	public void load() throws WrongDirectoryException {
 		load(dSavePath);
 	}
 	
 	/**
 	 * Loads the patient data using the input file path
 	 * @param path The path to the patient folder
+	 * @throws WrongDirectoryException If the directory is not accepted
 	 */
-	public void load(String path) {
+	public void load(String path) throws WrongDirectoryException {
 		try {
 			String dataP=path+"\\data.dat";
 			BufferedReader br = new BufferedReader(new FileReader(dataP));
@@ -182,7 +185,7 @@ public class Patient {
 				imgs=new PatientImage[0];
 		}
 		catch(Exception e) {
-			e.printStackTrace();
+			throw new WrongDirectoryException("Cartella sbagliata");
 		}
 		dSavePath=path;//Reimposta il save path di default in caso di caricamento da cartella diversa
 	

@@ -18,8 +18,12 @@ public class Connector {
 	
 	/** File Location */
 	private static String path="C:\\Users\\Daniele\\Downloads\\Universita\\img.png";
-	public static void main(String[] args) {
-		
+	
+	/**
+	 * Establishes a new connection with the mobile application
+	 */
+	public static void newConnection() {
+
 		Thread t=new Thread(new Runnable() {
 			
 			@Override
@@ -27,10 +31,10 @@ public class Connector {
 				
 				try {
 					ServerSocket ss=new ServerSocket(port);
-					System.out.println("running");
+					System.out.println("Waiting for mobile - port: "+port);
 					
 					Socket s = ss.accept();
-					System.out.println("accepted");
+					System.out.println("Received");
 					
 					ObjectInputStream ois=new ObjectInputStream(s.getInputStream());
 					
@@ -48,7 +52,6 @@ public class Connector {
 					e.printStackTrace();
 				} 
 				catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -56,7 +59,7 @@ public class Connector {
 		
 		//TODO
 		t.start();
-		
+	
 	}
 	
 }
