@@ -19,7 +19,6 @@
     <fullyQualifiedTypeName name="javax.swing.JTextField"/>
     <fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
     <fullyQualifiedTypeName name="java.io.File"/>
-    <fullyQualifiedTypeName name="components.Date"/>
     <fullyQualifiedTypeName name="javax.swing.JLabel"/>
     <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
     <fullyQualifiedTypeName name="java.awt.Dimension"/>
@@ -43,4 +42,5 @@
     <fullyQualifiedTypeName name="java.awt.image.ImageProducer"/>
     <fullyQualifiedTypeName name="java.awt.Image"/>
     <fullyQualifiedTypeName name="javax.swing.border.Border"/>
+    <fullyQualifiedTypeName name="components.Date"/>
 </qualifiedTypeNameHistroy>

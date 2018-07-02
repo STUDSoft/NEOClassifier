@@ -76,6 +76,7 @@ public class PatientPanel extends JPanel {
 	
 	/**
 	 * Default constructor
+	 * @param fatherPane The pane father of the tab
 	 * @param number The number of the current patient
 	 */
 	public PatientPanel(JTabbedPane fatherPane, int number) {
@@ -84,17 +85,32 @@ public class PatientPanel extends JPanel {
 	}
 	
 	/**
-	 * Constructor for loading
+	 * Constructor for new patient
+	 * @param fatherPane The pane father of the tab
 	 * @param number The number of the current patient
-	 * @param path The path to the folder of the patient
+	 * @param pt The data of the new patient
 	 */
-	public PatientPanel(JTabbedPane fatherPane, int number, String path) {
+	public PatientPanel(JTabbedPane fatherPane, int number, Patient pt) {
+		patient=pt;
+		createPanel(fatherPane, number);
+	}
+	
+	/**
+	 * Constructor for loading
+	 * @param fatherPane The pane father of the tab
+	 * @param number The number of the current patient
+	 * @param path The path to the directory of the patient
+	 * @throws WrongDirectoryException If the directory is not accepted
+	 */
+	public PatientPanel(JTabbedPane fatherPane, int number, String path) throws WrongDirectoryException {
 		patient=new Patient(path);
 		createPanel(fatherPane, number);
 	}
 	
 	/**
 	 * Creates the structure of the tab
+	 * @param fatherPane The pane father of the tab
+	 * @param number The current number of the patient
 	 */
 	private void createPanel(JTabbedPane fatherPane, int number) {
 
@@ -152,7 +168,7 @@ public class PatientPanel extends JPanel {
 		closeBtn=new JButton("close");
 		closeBtn.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int i=fPane.indexOfTab("Patient"+currentID);
+				int i=fPane.indexOfTabComponent(tabComponent);
 				if(i!=-1)
 					fPane.remove(i);
 				else
@@ -182,6 +198,7 @@ public class PatientPanel extends JPanel {
 		imgPanel.setLayout(new BoxLayout(imgPanel,BoxLayout.Y_AXIS));
 		
 		JLabel when= new JLabel("Date: "+image.getDate());
+		JLabel where=new JLabel("Where: "+image.getLocation());
 		JLabel danger= new JLabel("Dangerous: "+image.isDangerous());
 		
 		BufferedImage img=null;
@@ -193,6 +210,7 @@ public class PatientPanel extends JPanel {
 		JLabel imgLabel=new JLabel( new ImageIcon(img.getScaledInstance(imgDim.width, imgDim.height, Image.SCALE_DEFAULT)));
 		
 		imgPanel.add(when);
+		imgPanel.add(where);
 		imgPanel.add(danger);
 		imgPanel.add(imgLabel);
 

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 import components.ButtonTabComponent;
+import components.Date;
 
 /**
  * Launches application
@@ -41,6 +42,8 @@ public class SkinAnalysis extends JFrame {
 	
 	/** Button used to add a patient */
 	private JButton addPatientBt;
+	/** Button to load a patient data from mobile */
+	private JButton mobilePatientBt;
 	/** Button to update an existent patient data */
 	private JButton updatePatientBt;
 	/** Button to load an existent patient data */
@@ -67,16 +70,23 @@ public class SkinAnalysis extends JFrame {
 		start = new JPanel();
 		//start.setLayout( new BoxLayout(start, BoxLayout.Y_AXIS));
 		
-		addPatientBt=new JButton("Add Patient");
+		addPatientBt=new JButton("Nuovo paziente");
 		addPatientBt.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				addPatient();
 			}
 		});
+
+		mobilePatientBt=new JButton("Carica paziente da smartphone ");
+		mobilePatientBt.addActionListener(new java.awt.event.ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				mobilePatient();
+			}
+		});
 		
-		updatePatientBt=new JButton("Update an existing patient");
+		updatePatientBt=new JButton("Aggiorna paziente");
 		
-		loadPatientBt=new JButton("Load an existing patient");
+		loadPatientBt=new JButton("Carica un paziente esistente");
 		loadPatientBt.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				loadPatient();
@@ -94,6 +104,7 @@ public class SkinAnalysis extends JFrame {
 		JPanel btnPanel=new JPanel();
 		btnPanel.setLayout( new BoxLayout(btnPanel, BoxLayout.Y_AXIS));
 		btnPanel.add(addPatientBt);
+		btnPanel.add(mobilePatientBt);
 		btnPanel.add(updatePatientBt);
 		btnPanel.add(loadPatientBt);
 		btnPanel.add(closeApp);
@@ -133,14 +144,39 @@ public class SkinAnalysis extends JFrame {
 	 * Creates a new tab for a client
 	 */
 	private void addPatient() {
-		patientN++;
-		PatientPanel patientPanel=new PatientPanel(tabPane, patientN);
-		String title=new String("Patient"+patientN);
-		tabPane.addTab(title, patientPanel);
 		
-		ButtonTabComponent btn= patientPanel.getBtnTabComponent();
-		tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
+		JPanel newP=new JPanel();
+		newP.setLayout(new BoxLayout(newP, BoxLayout.Y_AXIS));
 		
+		JLabel nameL=new JLabel("Nome: ");
+		JTextArea nameTA=new JTextArea("Tizio");
+		JLabel surnameL=new JLabel("Cognome: ");
+		JTextArea surnameTA=new JTextArea("Caio");
+		JLabel dobL=new JLabel("Data di Nascita: ");
+		JTextArea dobTA=new JTextArea("1990-01-01");
+		
+		newP.add(nameL);
+		newP.add(nameTA);
+		newP.add(surnameL);
+		newP.add(surnameTA);
+		newP.add(dobL);
+		newP.add(dobTA);
+		
+	    int result = JOptionPane.showConfirmDialog(this, newP,
+	            "Nuovo Paziente", JOptionPane.OK_CANCEL_OPTION);
+		if(result==JOptionPane.OK_OPTION) {
+			Patient pt=new Patient(patientN+1, nameTA.getText(), surnameTA.getText(), new Date(dobTA.getText()));
+			PatientPanel patientPanel=new PatientPanel(tabPane, patientN+1, pt);
+			createPanel(patientPanel);
+		}
+		
+	}
+	
+	/**
+	 * Creates a connection with the mobile app and loads patient data from there
+	 */
+	private void mobilePatient() {
+		Connector.newConnection();
 	}
 	
 	/**
@@ -156,20 +192,35 @@ public class SkinAnalysis extends JFrame {
 	    if (rVal == JFileChooser.APPROVE_OPTION) {
 	        path=c.getCurrentDirectory().toString()+"\\"+c.getSelectedFile().getName();
 
-			PatientPanel patientPanel=new PatientPanel(tabPane, patientN+1, path);
-			String title=new String("Patient"+(patientN+1));
-			tabPane.addTab(title, patientPanel);
+			try {
+				PatientPanel patientPanel;
+				patientPanel = new PatientPanel(tabPane, patientN+1, path);
+				
+				createPanel(patientPanel);
+			} catch (WrongDirectoryException e) {
+				JPanel msg=new JPanel();
+				msg.add(new JLabel("Cartella non accettata, file mancanti"));
+				JOptionPane.showMessageDialog(this, msg);
+			}
 			
-			ButtonTabComponent btn= patientPanel.getBtnTabComponent();
-			tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
-		     
-			patientN++;
 			
 	    }
 	    else if (rVal == JFileChooser.CANCEL_OPTION) {
 	        System.out.println("Loading cancelled");
 	    }
 		
+	}
+	
+	/**
+	 * Creates a new tab given the patient panel
+	 * @param ptPanel The panel of the new tab
+	 */
+	private void createPanel(PatientPanel ptPanel) {
+		patientN++;
+		String title=new String("Patient "+patientN);
+		tabPane.addTab(title, ptPanel);		
+		ButtonTabComponent btn= ptPanel.getBtnTabComponent();
+		tabPane.setTabComponentAt(tabPane.indexOfTab(title), btn);
 	}
 	
 	/**
