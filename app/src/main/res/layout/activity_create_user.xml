@@ -47,7 +47,7 @@
             android:layout_below="@+id/textView3"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48px"
-            android:text="Crea un profilo per iniziare"
+            android:text="Inserisci i dati del paziente per iniziare"
             android:textColor="#858585"
             android:textSize="47px"
             app:layout_constraintEnd_toEndOf="parent"

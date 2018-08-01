@@ -4,11 +4,11 @@
         android:duration="250"
         android:fromAlpha="0.0"
         android:interpolator="@android:anim/accelerate_interpolator"
-        android:startOffset="1000"
+        android:startOffset="650"
         android:toAlpha="1.0" />
     <translate
         android:duration="250"
-        android:fromYDelta="-100%"
-        android:startOffset="1000"
+        android:fromYDelta="100%"
+        android:startOffset="650"
         android:toYDelta="0" />
 </set>
