@@ -51,7 +51,7 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         final TextInputLayout dateWrapper = findViewById(R.id.editText5);
         final TextInputLayout emailWrapper = findViewById(R.id.editText7);
         final Button createProfile = findViewById(R.id.button);
-        Animation animFadeInSlideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_slide_up);
+        Animation animFadeInSlideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_from_dimension2);
         Animation animFadeInSlideUp2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_slide_up2);
         Animation animFadeInSlideUp3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_slide_up3);
         Animation scale1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale1);

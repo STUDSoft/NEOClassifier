@@ -22,8 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView2"
         android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:layout_marginTop="102px"
         android:text="Hai creato il tuo profilo"
+        android:textAlignment="center"
         android:textColor="#454545"
         android:textSize="72px" />
 
@@ -33,6 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
         android:layout_marginTop="48px"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
         android:text="Ora esegui la tua prima scansione oppure vai alla home"
         android:textAlignment="center"
         android:textColor="#858585"
