@@ -40,6 +40,7 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
     private EditText surnameField = null;
     private EditText emailField = null;
     private EditText dateField = null;
+    private EditText passwordField = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         final TextInputLayout surnameWrapper = findViewById(R.id.editText4);
         final TextInputLayout dateWrapper = findViewById(R.id.editText5);
         final TextInputLayout emailWrapper = findViewById(R.id.editText7);
+        final TextInputLayout passwordWrapper = findViewById(R.id.editText8);
         final Button createProfile = findViewById(R.id.button);
         Animation animFadeInSlideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_from_dimension2);
         Animation animFadeInSlideUp2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_slide_up2);
@@ -59,10 +61,12 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         final Animation scale3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale3);
         final Animation scale4 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale4);
         final Animation scale5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale5);
+        final Animation scale6 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale6);
         nameField = findViewById(R.id.nameField);
         surnameField = findViewById(R.id.surnameField);
         dateField = findViewById(R.id.dateField);
         emailField = findViewById(R.id.emailField);
+        passwordField = findViewById(R.id.passwordField);
         dateField.setKeyListener(null);
         nameField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -106,7 +110,15 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
                 }
             }
         });
-        emailField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    validatePassword();
+                }
+            }
+        });
+        passwordField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
@@ -148,7 +160,8 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         surnameWrapper.startAnimation(scale2);
         dateWrapper.startAnimation(scale3);
         emailWrapper.startAnimation(scale4);
-        createProfile.startAnimation(scale5);
+        passwordWrapper.startAnimation(scale5);
+        createProfile.startAnimation(scale6);
     }
 
     @Override
@@ -171,6 +184,9 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
             validate = false;
         }
         if (!validateEmail()) {
+            validate = false;
+        }
+        if (!validatePassword()) {
             validate = false;
         }
         if (validate) {
@@ -258,8 +274,30 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         }
     }
 
+    private boolean validatePassword() {
+        TextInputLayout passwordWrapper = findViewById(R.id.editText8);
+        String password = passwordField.getText().toString();
+        if (password.isEmpty()) {
+            passwordWrapper.setErrorEnabled(true);
+            passwordWrapper.setError("Inserisci una password");
+            return false;
+        } else if(!passwordValidator(password)) {
+            passwordWrapper.setErrorEnabled(true);
+            passwordWrapper.setError("La password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole e numeri");
+            return false;
+        } else {
+            passwordWrapper.setErrorEnabled(false);
+            return true;
+        }
+    }
+
     private boolean stringContainsNumbers(String s) {
         return Pattern.compile("[0-9]").matcher(s).find();
+    }
+
+    private boolean passwordValidator(String s) {
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+        return s.matches(pattern);
     }
 
     private boolean emailValidator(String s) {
