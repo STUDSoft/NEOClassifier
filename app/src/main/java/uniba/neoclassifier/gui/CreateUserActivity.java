@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,29 +42,47 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
     private EditText surnameField = null;
     private EditText emailField = null;
     private EditText dateField = null;
+    private EditText passwordField = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
+        TextView loginText = findViewById(R.id.textView3);
+        String sourceString = "Hai già un account? <u><b>Accedi</b></u>";
+        loginText.setText(Html.fromHtml(sourceString));
+        loginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CreateUserActivity.this, LoginActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.fade_in, R.anim.no_anim);
+                finish();
+            }
+        });
         session = new SessionManager(getApplicationContext());
         TextInputLayout nameWrapper = findViewById(R.id.editText3);
         final TextInputLayout surnameWrapper = findViewById(R.id.editText4);
         final TextInputLayout dateWrapper = findViewById(R.id.editText5);
         final TextInputLayout emailWrapper = findViewById(R.id.editText7);
+        final TextInputLayout passwordWrapper = findViewById(R.id.editText8);
         final Button createProfile = findViewById(R.id.button);
+        CheckBox checkBox = findViewById(R.id.checkBox);
         Animation animFadeInSlideUp = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_from_dimension2);
-        Animation animFadeInSlideUp2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_slide_up2);
         Animation animFadeInSlideUp3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in_slide_up3);
         Animation scale1 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale1);
         final Animation scale2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale2);
         final Animation scale3 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale3);
         final Animation scale4 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale4);
         final Animation scale5 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale5);
+        final Animation scale6 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale6);
+        final Animation scale7 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale7);
+        final Animation scale8 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale8);
         nameField = findViewById(R.id.nameField);
         surnameField = findViewById(R.id.surnameField);
         dateField = findViewById(R.id.dateField);
         emailField = findViewById(R.id.emailField);
+        passwordField = findViewById(R.id.passwordField);
         dateField.setKeyListener(null);
         nameField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -106,7 +126,15 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
                 }
             }
         });
-        emailField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        passwordField.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b) {
+                    validatePassword();
+                }
+            }
+        });
+        passwordField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_DONE) {
@@ -139,16 +167,17 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
             }
         });
         ImageView logo = findViewById(R.id.imageView);
-        TextView benvenuti = findViewById(R.id.textView3);
         TextView crea_prof = findViewById(R.id.textView4);
         logo.startAnimation(animFadeInSlideUp);
-        benvenuti.startAnimation(animFadeInSlideUp2);
         crea_prof.startAnimation(animFadeInSlideUp3);
         nameWrapper.startAnimation(scale1);
         surnameWrapper.startAnimation(scale2);
         dateWrapper.startAnimation(scale3);
         emailWrapper.startAnimation(scale4);
-        createProfile.startAnimation(scale5);
+        passwordWrapper.startAnimation(scale5);
+        checkBox.startAnimation(scale6);
+        createProfile.startAnimation(scale7);
+        loginText.startAnimation(scale8);
     }
 
     @Override
@@ -173,6 +202,9 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         if (!validateEmail()) {
             validate = false;
         }
+        if (!validatePassword()) {
+            validate = false;
+        }
         if (validate) {
             Paziente paziente = new Paziente(nameField.getText().toString(), surnameField.getText().toString(),
                     dateField.getText().toString(), emailField.getText().toString());
@@ -183,7 +215,6 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
                 startActivity(intent);
                 overridePendingTransition(R.anim.fade_in, R.anim.no_anim);
                 finish();
-
             } else {
                 Toast.makeText(this, "Errore nella registrazione", Toast.LENGTH_LONG).show();
             }
@@ -258,8 +289,30 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         }
     }
 
+    private boolean validatePassword() {
+        TextInputLayout passwordWrapper = findViewById(R.id.editText8);
+        String password = passwordField.getText().toString();
+        if (password.isEmpty()) {
+            passwordWrapper.setErrorEnabled(true);
+            passwordWrapper.setError("Inserisci una password");
+            return false;
+        } else if (!passwordValidator(password)) {
+            passwordWrapper.setErrorEnabled(true);
+            passwordWrapper.setError("La password deve essere lunga almeno 8 caratteri e contenere minuscole, maiuscole e numeri");
+            return false;
+        } else {
+            passwordWrapper.setErrorEnabled(false);
+            return true;
+        }
+    }
+
     private boolean stringContainsNumbers(String s) {
         return Pattern.compile("[0-9]").matcher(s).find();
+    }
+
+    private boolean passwordValidator(String s) {
+        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}";
+        return s.matches(pattern);
     }
 
     private boolean emailValidator(String s) {
@@ -299,9 +352,11 @@ public class CreateUserActivity extends AppCompatActivity implements DatePickerD
         datePicker.show(getSupportFragmentManager(), "date picker");
     }
 
+    /*
     @Override
     protected void onPause() {
         hideKeyboard(CreateUserActivity.this);
         super.onPause();
     }
+    */
 }

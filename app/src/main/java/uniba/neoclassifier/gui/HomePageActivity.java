@@ -207,7 +207,7 @@ public class HomePageActivity extends AppCompatActivity
     private void logout() {
         SessionManager sessionManager = new SessionManager(getApplicationContext());
         sessionManager.logoutUser();
-        Intent i = new Intent(this, CreateUserActivity.class);
+        Intent i = new Intent(this, LoginActivity.class);
         this.startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.fade_back);
         finish();
