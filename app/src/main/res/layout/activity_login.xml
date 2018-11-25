@@ -19,23 +19,39 @@
             android:layout_height="340dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="25dp"
             app:srcCompat="@drawable/doctor" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Benvenuto in NEOClassifier"
+            android:textColor="#404040"
+            android:textSize="72px"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/editText7"
             android:layout_width="984px"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imageView4"
+            android:layout_below="@+id/textView8"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp">
+            android:layout_marginTop="25dp">
 
             <EditText
-                android:id="@+id/emailField"
+                android:id="@+id/emailField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="E-mail"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textSize="47px"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -47,14 +63,15 @@
             android:layout_marginTop="5dp">
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/passwordField2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/editText7"
                 android:layout_centerHorizontal="true"
                 android:ems="10"
                 android:hint="Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textSize="47px"/>
         </android.support.design.widget.TextInputLayout>
 
         <Button
@@ -63,13 +80,14 @@
             android:layout_height="108px"
             android:layout_below="@+id/editText8"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="25dp"
             android:background="@drawable/roundedbutton"
             android:text="ACCEDI"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:textSize="47px"
             app:layout_constraintTop_toBottomOf="@+id/editText7" />
 
         <TextView
@@ -78,8 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/button2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginBottom="35dp"
+            android:layout_marginBottom="25dp"
+            android:layout_marginTop="25dp"
             android:text=""
             android:textColor="#808080"
             android:textSize="47px" />

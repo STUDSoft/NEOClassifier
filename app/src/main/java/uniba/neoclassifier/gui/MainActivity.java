@@ -3,6 +3,9 @@ package uniba.neoclassifier.gui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.HashMap;
 
@@ -29,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             this.startActivity(i);
             finish();
         }else{
-            Intent i = new Intent(MainActivity.this, CreateUserActivity.class);
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
             this.startActivity(i);
             finish();
         }
